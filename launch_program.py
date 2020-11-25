@@ -8,9 +8,6 @@ sys_out = os.popen(f'curl -s -u "{client_id}:{client_secret}" "{auth_url}" -d "g
 a = sys_out.read()
 sys_out.close()
 access_token = json.loads(a)['access_token']
-# file = open("token.txt", "w")
-# file.write(access_token)
-# file.close()
 
 sys_out_1 = os.popen(f'python client.py \
 --serverUrl dlg.api.nuance.com:443 \
