@@ -1,0 +1,195 @@
+syntax = "proto3";
+package nuance.dlg.v1.common;
+
+option java_multiple_files = true;
+option java_package = "com.nuance.coretech.dialog.v1.common.messages";
+
+import "google/protobuf/struct.proto";
+
+// Payload sent with the Start request.
+message StartRequestPayload {
+  ResourceReference model_ref = 1; //Reference object of the resource to use for the request.
+  google.protobuf.Struct data = 2; //Map of data sent in the request.
+  bool suppress_log_user_data = 3; //Set to true to disable logging for ASR, NLU, TTS, and Dialog.
+}
+
+//Reference object of the resource to use for the request (for example, URN or URL of the model)
+message ResourceReference{
+  string uri = 1; // Reference (for example, the URL or URN).
+  EnumResourceType type = 2; // Type of resource.
+  enum EnumResourceType{
+    APPLICATION_MODEL = 0; // Dialog application model. 
+  }
+}
+
+// Payload returned after the Start method is called. If a session ID is not provided in the request, a new one is generated and should be used for subsequent calls.
+message StartResponsePayload {
+  string session_id = 1; // Returns session ID to use for subsequent calls.
+}
+
+//------------------------------------------------------------------------
+
+// Payload sent with the Execute request. If both an event and a user input are provided, the event has precedence. For example, if
+// an error event is provided, the input will be ignored.
+message ExecuteRequestPayload {
+  UserInput user_input = 1; // Input provided to the Dialog engine.
+  DialogEvent dialog_event = 2; //Used to pass in events that can drive the flow. Optional; if an event is not passed, the operation is assumed to be successful. //TODO: Should this be seperated to be QA Node specific
+  RequestData requested_data = 3; //Data that was previously requested by engine.
+}
+
+// Provides input to the Dialog engine. The client application sends either the text collected from the user, to be interpreted by Mix, or
+// an interpretation that was performed externally.
+message UserInput {
+  oneof input {
+    string user_text = 1; //Text collected from end user.
+    Interpretation interpretation = 2; // Interpretation that was done externally (e.g., NR for vxml).
+    Selectable.SelectableItem.SelectedValue selected_item = 3; // Value of element selected by end user.
+  }
+
+  // Sends interpretation data.
+  message Interpretation {
+    float confidence = 1; //Required: Value from 0..1 that indicates the confidence of the interpretation.
+    string input_mode = 2; //Optional: Input mode. Current values are dtmf/voice (but input mode not limited to these).
+    string utterance = 3; //Raw collected text.
+    map<string,string> data = 4; //Data from the interpretation of intents and entities. For example, INTENT:BILL_PAY or or AMOUNT:100.
+    map<string,string> slot_literals = 5; // Slot literals from the interpretation of the entities. The slot literal provides the exact words used by the user. For example, AMOUNT: One hundred dollars.
+    repeated Interpretation alternative_interpretations = 6; //Alternative interpretations possible from the interaction, that is, n-best list.
+    map<string, float> slot_confidences = 7; //Slot confidence values from the interpretation of the entities. 
+  }
+}
+
+// Data that was requested by the dialog application.
+message RequestData {
+  string id = 1; //ID used by the dialog application to identify which node requested the data.
+  google.protobuf.Struct data = 2; //Map of keys to json objects of the data requested.
+}
+
+//------------------------------------------------------------------------
+
+// Payload returned after the Execute method is called.
+// Specifies the action to be performed by the client application. 
+message ExecuteResponsePayload {
+  repeated Message messages = 1; // Message action to be performed by the client application. 
+  oneof action {
+    QAAction qa_action = 2; // Question and Answer action to be performed by the client application.
+    DAAction da_action = 3; // Data Access action to be performed by the client application.
+    EscalationAction escalation_action = 4; // Escalation action to be performed by the client application.
+    EndAction end_action = 5; // End action to be performed by the client application.
+    ContinueAction continue_action = 6; // Continue action to be performed by the client application.
+  }
+}
+
+// Specifies the message to be played to the user.
+message Message {
+  repeated Nlg nlg = 1; // Text to be played using Text-to-speech.
+  repeated Visual visual = 2; // Text to be displayed to the user (for example, in a chat).
+  repeated Audio audio = 3; // Prompt to be played from an audio file.
+  View view = 4; // View details for this message.
+
+  message Nlg {
+    string text = 1; // Text to be played using Text-to-speech.
+  }
+
+  message Visual {
+    string text = 1; // Text to be displayed to the user (for example, in a chat).
+  }
+
+  message Audio {
+    string text = 1; // Text of the prompt to be played.
+    oneof AudioSrc {
+      string uri = 2; // Uri to the audio file.
+    }
+  }
+}
+
+// Specifies view details for this action. 
+message View {
+  string id = 1; // ID of the view.
+  string name = 2; // Name of the view.
+}
+
+// Interactive elements to be displayed by the client app, such as clickable buttons or links. 
+message Selectable{
+  repeated SelectableItem selectable_items = 1; // List of interactive elements. 
+
+  message SelectableItem{
+    SelectedValue value = 1; // Object to be passed in the ExecuteRequest when the user interacts with this element.
+    string description = 2; // Description of the interactive element.
+    string display_text = 3;  // Text to display for this interactive element.
+    string display_image_uri = 4; // URI of image to display for this interactive element.
+
+    message SelectedValue{
+      string id = 1; // ID of option.
+      string value = 2; // Value of option.
+    }
+  }
+}
+
+// Question and Answer action to be performed by the client application.
+message QAAction {
+  Message message = 1; // Message to be played as part of the Q&A action. 
+  google.protobuf.Struct data = 2;  // Map of data exchanged in this node. 
+  View view = 3; // View details for this action.
+  Selectable selectable = 4; // Interactive elements to be displayed by the client app, such as clickable buttons or links. 
+}
+
+// Data Access action to be performed by the client application.
+message DAAction {
+  string id = 1; // ID identifying the Data Access node in the dialog application.
+  Message message = 2; // Message to be played as part of the Data Access action.
+  View view = 3; // View details for this action.
+  google.protobuf.Struct data = 4;  // Map of data exchanged in this node. 
+}
+
+// Escalation action to be performed by the client application.
+message EscalationAction {
+  Message message = 1; // Message to be played as part of the escalation action.
+  View view = 2; // View details for this action.
+  google.protobuf.Struct data = 3;  // Map of data exchanged in this node.
+  string id = 4; // ID identifying the External Action node in the dialog application.
+}
+
+// End node, indicates that the dialog has ended.
+message EndAction {
+  google.protobuf.Struct data = 1;  // Map of data exchanged in this node.
+  string id = 2; // ID identifying the End Action node in the dialog application.
+}
+
+// Continue action to be performed by the client application.
+message ContinueAction {
+  Message message = 1; // Message to be played as part of the continue action.
+  View view = 2; // View details for this action.
+  google.protobuf.Struct data = 3;  // Map of data exchanged in this node.
+  string id = 4; // ID identifying the Continue Action node in the dialog application.
+}
+
+//------------------------------------------------------------------------
+
+
+
+/**
+ * @exclude
+ */
+
+//Message used to indicate an event that occurred during the dialog interactions.
+message DialogEvent {
+  //The possible event types that can occur on the client side of interactions.
+  enum  EventType {
+    SUCCESS = 0; //Everything went as expected.
+    ERROR = 1; //An unexpected problem occurred.
+    NO_INPUT = 2; //End user has not provided any input.
+    NO_MATCH = 3; //End user provided unrecognizable input.
+    HANGUP = 4; //End user has hung up. Currently used for UVR interactions.
+    CUSTOM = 5; //Custom event, expect event_name to be set
+  }
+  EventType type = 1; // Type of event being triggered.
+  string message = 2; //Optional message providing additional information about the event.
+  string event_name = 3; //Only used when type is set to CUSTOM
+}
+
+// Provides channel and language used for the conversation.
+message Selector {
+  string channel = 1; //Optional: Channel that this conversation is going to use (for example, WebVA).
+  string language = 2; //Optional: Language to use for this conversation.
+  string library = 3; //Optional: Library to use for this conversation. Advanced customization reserved for future use.
+}

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="71bbb1e9-75ea-410a-9c35-b970e89809da" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1hNry4DS2pNoAUvhYXi9UjbnSrD" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.project" />
+  </component>
+  <component name="RunManager" selected="Python.launch_program">
+    <configuration name="launch_nlu" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="test_python_mix" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/launch_nlu.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="launch_program" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="test_python_mix" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/launch_program.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="medic_api" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="test_python_mix" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/medic_api.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="medical_api" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="test_python_mix" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/medical_api.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="random" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="test_python_mix" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/random.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.launch_nlu" />
+      <item itemvalue="Python.launch_program" />
+      <item itemvalue="Python.medic_api" />
+      <item itemvalue="Python.medical_api" />
+      <item itemvalue="Python.random" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.launch_program" />
+        <item itemvalue="Python.random" />
+        <item itemvalue="Python.medical_api" />
+        <item itemvalue="Python.medic_api" />
+        <item itemvalue="Python.launch_nlu" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="71bbb1e9-75ea-410a-9c35-b970e89809da" name="Default Changelist" comment="" />
+      <created>1599862641841</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1599862641841</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600099171156">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1600099171156" />
+    <state x="392" y="142" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1606166793959">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="392" y="142" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.680@0.0.1280.680" timestamp="1606166793959" />
+    <state x="421" y="45" key="#com.intellij.ide.macro.MacrosDialog" timestamp="1600098234735">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="421" y="45" key="#com.intellij.ide.macro.MacrosDialog/0.0.1280.680@0.0.1280.680" timestamp="1600098234735" />
+    <state x="371" y="87" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1606326684628">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="371" y="87" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1280.680@0.0.1280.680" timestamp="1606326684628" />
+    <state x="421" y="95" key="FileChooserDialogImpl" timestamp="1600456870790">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="421" y="95" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1600456870790" />
+    <state width="1259" height="225" key="GridCell.Tab.0.bottom" timestamp="1606341727931">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1259" height="225" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1606341727931" />
+    <state width="1259" height="225" key="GridCell.Tab.0.center" timestamp="1606341727931">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1259" height="225" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1606341727931" />
+    <state width="1259" height="225" key="GridCell.Tab.0.left" timestamp="1606341727931">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1259" height="225" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1606341727931" />
+    <state width="1259" height="225" key="GridCell.Tab.0.right" timestamp="1606341727931">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1259" height="225" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1606341727931" />
+    <state width="1259" height="430" key="GridCell.Tab.1.bottom" timestamp="1600456872629">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1259" height="430" key="GridCell.Tab.1.bottom/0.0.1280.680@0.0.1280.680" timestamp="1600456872629" />
+    <state width="1259" height="430" key="GridCell.Tab.1.center" timestamp="1600456872629">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1259" height="430" key="GridCell.Tab.1.center/0.0.1280.680@0.0.1280.680" timestamp="1600456872629" />
+    <state width="1259" height="430" key="GridCell.Tab.1.left" timestamp="1600456872629">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1259" height="430" key="GridCell.Tab.1.left/0.0.1280.680@0.0.1280.680" timestamp="1600456872629" />
+    <state width="1259" height="430" key="GridCell.Tab.1.right" timestamp="1600456872629">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1259" height="430" key="GridCell.Tab.1.right/0.0.1280.680@0.0.1280.680" timestamp="1600456872629" />
+    <state x="142" y="0" key="SettingsEditor" timestamp="1600202320590">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="142" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1600202320590" />
+  </component>
+</project>
