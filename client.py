@@ -155,12 +155,15 @@ def main():
                             payload_dict=payload_dict
                         )
         eprint(response)
-        symptom_id = response['payload']['daAction']['data']['user_symptoms']
-        eprint(f'your symptom id is: {symptom_id}')
+        symptom_name = response['payload']['daAction']['data']['user_symptoms']
+        eprint(f'your symptom is: {symptom_name}')
         doctor = ApiClass()
-        diagnosis = doctor.get_diagnosis([symptom_id, 10])
+        symptom_id = doctor.get_symptom_id(symptom_name)
+        eprint(f'symptom id: {symptom_id}')
+        diagnosis = doctor.get_diagnosis([symptom_id, 10, 11], 'male', 2000)
         eprint(diagnosis)
         eprint(f'Your most likely diagnosis is: {diagnosis[0]["Issue"]["Name"]}')
+        eprint(doctor.get_issue_info(diagnosis[0]["Issue"]["ID"]))
         assert call.code() == StatusCode.OK
         response, call = stop_request(stub, 
                             session_id=session_id
