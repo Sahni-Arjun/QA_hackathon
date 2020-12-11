@@ -38,12 +38,10 @@ class ApiClass:
 
     def get_issue_info(self, issue_id):
         issue_url = f'{self.base_url}/issues/{str(issue_id)}/info?token={self.sandbox_auth_token}&language=en-gb'
-        #issue_url = f'{self.base_url}/issues/324/info?token={self.sandbox_auth_token}&language=en-gb'
         response = requests.get(issue_url)
         response_str = response.content.decode("UTF-8")
         normalized_str = unicodedata.normalize('NFKD', response_str).encode('ascii', 'ignore').decode("ascii")
         return json.loads(normalized_str)
-
 
     def get_more_symptoms(self, symptom_id_list, gender, yob):
         url = f'{self.base_url}/symptoms/proposed?token={self.sandbox_auth_token}&language=en-gb&symptoms={str(symptom_id_list)}&gender={gender.lower()}&year_of_birth={str(yob)}'

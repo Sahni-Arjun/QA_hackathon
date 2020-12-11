@@ -2,6 +2,7 @@ import argparse
 import logging
 import time
 from medical_api import ApiClass
+from DlgHandler import DlgHandler
 import sys
 
 import uuid
@@ -78,20 +79,22 @@ def start_request(stub, model_ref_dict, session_id, selector_dict={}):
     #log.debug(f'Start Request Response: {response}')
     return response, call
 
-def execute_request(stub, session_id, selector_dict={}, payload_dict={}):
-    selector = Selector(channel=selector_dict.get('channel'), 
+def execute_request(stub, session_id, selector_dict={}, payload_dict={}, data=None, id=None):
+    selector = Selector(channel=selector_dict.get('channel'),
                         library=selector_dict.get('library'),
                         language=selector_dict.get('language'))
     input = UserInput(user_text=payload_dict.get('user_input').get('userText'))
-    execute_payload = ExecuteRequestPayload(
-                        user_input=input)
-    execute_request = ExecuteRequest(session_id=session_id, 
-                        selector=selector, 
+    request_data = None
+    if id:
+        request_data = RequestData(id=id, data=data)
+        execute_payload = ExecuteRequestPayload(requested_data=request_data)
+    else:
+        execute_payload = ExecuteRequestPayload(user_input=input)
+    execute_request = ExecuteRequest(session_id=session_id,
+                        selector=selector,
                         payload=execute_payload)
-    #log.debug(f'Execute Request: {execute_payload}')
     execute_response, call = stub.Execute.with_call(execute_request)
     response = MessageToDict(execute_response)
-    #log.debug(f'Execute Response: {response}')
     return response, call
 
 def stop_request(stub, session_id=None):
@@ -102,7 +105,7 @@ def stop_request(stub, session_id=None):
     #log.debug(f'Stop Response: {response}')
     return response, call
 
-def main():
+def the_main():
     args = parse_args()
     #log_level = logging.DEBUG
     #logging.basicConfig(
@@ -137,9 +140,11 @@ def main():
                             selector_dict=selector_dict,
                             payload_dict=payload_dict
                         )
-
+        handler = DlgHandler()
+        eprint(handler.response_type(response))
         qa_node_text = response['payload']['qaAction']['message']['visual'][0]['text']
         eprint(qa_node_text)
+        eprint(response['payload'])
         x = input()
         assert call.code() == StatusCode.OK
 
@@ -158,17 +163,20 @@ def main():
         symptom_name = response['payload']['daAction']['data']['user_symptoms']
         eprint(f'your symptom is: {symptom_name}')
         doctor = ApiClass()
-        symptom_id = doctor.get_symptom_id(symptom_name)
-        eprint(f'symptom id: {symptom_id}')
-        diagnosis = doctor.get_diagnosis([symptom_id, 10, 11], 'male', 2000)
-        eprint(diagnosis)
-        eprint(f'Your most likely diagnosis is: {diagnosis[0]["Issue"]["Name"]}')
-        eprint(doctor.get_issue_info(diagnosis[0]["Issue"]["ID"]))
-        assert call.code() == StatusCode.OK
-        response, call = stop_request(stub, 
-                            session_id=session_id
-                        )
-        assert call.code() == StatusCode.OK
+        # symptom_id = doctor.get_symptom_id(symptom_name)
+        # eprint(f'symptom id: {symptom_id}')
+        # more_symptoms = doctor.get_more_symptoms([symptom_id, 10], 'male', 2000)
+        # eprint("MORE SYMPTOMS")
+        # eprint(more_symptoms)
+        # diagnosis = doctor.get_diagnosis([symptom_id, 10], 'male', 2000)
+        # eprint(diagnosis)
+        # eprint(f'Your most likely diagnosis is: {diagnosis[0]["Issue"]["Name"]}')
+        # eprint(doctor.get_issue_info(diagnosis[0]["Issue"]["ID"]))
+        # assert call.code() == StatusCode.OK
+        # response, call = stop_request(stub,
+        #                     session_id=session_id
+        #                 )
+        # assert call.code() == StatusCode.OK
 
 if __name__ == '__main__':
-    main()
+    the_main()
