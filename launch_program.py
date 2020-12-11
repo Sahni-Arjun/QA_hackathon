@@ -8,12 +8,13 @@ sys_out = os.popen(f'curl -s -u "{client_id}:{client_secret}" "{auth_url}" -d "g
 a = sys_out.read()
 sys_out.close()
 access_token = json.loads(a)['access_token']
+tag = "A1421_C1"
+tag = "MEDICAL_DIAGNOSIS_721"
 
-sys_out_1 = os.popen(f'python client.py \
+sys_out_1 = os.popen(f'python final_client.py \
 --serverUrl dlg.api.nuance.com:443 \
 --token {access_token} \
---modelUrn "urn:nuance-mix:tag:model/A1421_C1/mix.dialog" \
---textInput "I want a coffee"', "r")
+--modelUrn "urn:nuance-mix:tag:model/{tag}/mix.dialog"', "r")
 
 a = sys_out_1.read()
 print(a)
