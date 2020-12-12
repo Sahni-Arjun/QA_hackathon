@@ -71,13 +71,19 @@ class Program:
             # log.debug(f'Second request, passing in user input')
             response = self.respond(requested_id=self.id, requested_data_struct=self.requested_data_struct)
             for i in range(3):
-                x = handler.handle_response(response)
-                response = self.respond(user_input=x)
-                x = handler.handle_response(response)
-                response = self.respond(user_input=x)
-            eprint(response)
-            data = response['payload']['daAction']['data']['symptom_obj']
-            symptom_names = [data[y] for y in data]
+                if 'daAction' in handler.response_type(response):
+                    break
+                x = handler.handle_qa(response)
+                response = self.respond(user_input=x[0])
+                x = handler.handle_qa(response)
+                eprint(x)
+                response = self.respond(user_input=x[0])
+            data = handler.handle_da(response)['symptom_obj']
+            symptom_names = []
+            for y in data:
+                if not data[y].isdigit():
+                    symptom_names.append(data[y])
+            eprint(symptom_names)
             symptom_ids = [doctor.get_symptom_id(name) for name in symptom_names]
             diagnosis = doctor.get_diagnosis(symptom_ids, 'male', 2000)
             eprint(diagnosis)
