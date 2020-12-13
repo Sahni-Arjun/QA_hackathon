@@ -22,16 +22,14 @@ class Program:
     }
 
     def __init__(self):
-        handler = DlgHandler()
+        self.handler = DlgHandler()
         self.args = parse_args()
         self.model_ref_dict = {
             "uri": self.args.modelUrn,
             "type": 0
         }
-        self.requested_data_struct = Struct()
         self.id= 'DataAccess_01'
-        self.requested_data_struct.update({"symptom_obj": {'s1': '1', 's2': '2', 's3': '3'}})
-        self.requested_data_struct.update({"returnCode": "0"})
+        self.requested_data_struct = self.create_proto_struct({"symptom_obj": {'s1': '1', 's2': '2', 's3': '3'}})
 
     def respond(self, user_input=None, requested_id=None, requested_data_struct=None):
         payload_dict = {
@@ -49,6 +47,12 @@ class Program:
         assert call.code() == StatusCode.OK
         return response
 
+    def create_proto_struct(self, data: dict):
+        s = Struct()
+        s.update(data)
+        s.update({"returnCode": "0"})
+        return s
+
     def intialize_connection(self, channel):
         self.stub = DialogServiceStub(channel)
         response, call = start_request(self.stub,
@@ -62,23 +66,39 @@ class Program:
         response = self.respond()
         return response
 
+    def handle_symptoms(self, num_symptoms, response):
+        x = self.handler.handle_qa(response)
+        for i in range(num_symptoms):
+            if 'daAction' in self.handler.response_type(response):
+                break
+            response = self.respond(user_input=x[0])
+            x = self.handler.handle_qa(response)
+            eprint(x)
+            response = self.respond(user_input=x[0])
+        return response
 
-    def main(self):
+    def handle_name(self, response):
+        id = self.handler.handle_da(response)
+        x = input()
+        s = self.create_proto_struct({"user_name" : x})
+        return self.respond(requested_id=id, requested_data_struct=s)
+
+
+    def main_earlier(self):
         doctor = ApiClass()
-        handler = DlgHandler()
         with create_channel(self.args) as channel:
             self.intialize_connection(channel)
             # log.debug(f'Second request, passing in user input')
             response = self.respond(requested_id=self.id, requested_data_struct=self.requested_data_struct)
             for i in range(3):
-                if 'daAction' in handler.response_type(response):
+                if 'daAction' in self.handler.response_type(response):
                     break
-                x = handler.handle_qa(response)
+                x = self.handler.handle_qa(response)
                 response = self.respond(user_input=x[0])
-                x = handler.handle_qa(response)
+                x = self.handler.handle_qa(response)
                 eprint(x)
                 response = self.respond(user_input=x[0])
-            data = handler.handle_da(response)['symptom_obj']
+            data = self.handler.handle_da(response)['symptom_obj']
             symptom_names = []
             for y in data:
                 if not data[y].isdigit():
@@ -96,4 +116,4 @@ class Program:
 
 if __name__ == '__main__':
     program = Program()
-    program.main()
+    program.main_earlier()
