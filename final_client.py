@@ -29,7 +29,7 @@ class Program:
             "type": 0
         }
         self.id= 'DataAccess_01'
-        self.requested_data_struct = self.create_proto_struct({"symptom_obj": {'s1': '1', 's2': '2', 's3': '3'}})
+        self.requested_data_struct = self.create_proto_struct([{"symptom_obj": {'s1': '1', 's2': '2', 's3': '3'}}])
 
     def respond(self, user_input=None, requested_id=None, requested_data_struct=None):
         payload_dict = {
@@ -47,9 +47,10 @@ class Program:
         assert call.code() == StatusCode.OK
         return response
 
-    def create_proto_struct(self, data: dict):
+    def create_proto_struct(self, data_list):
         s = Struct()
-        s.update(data)
+        for data in data_list:
+            s.update(data)
         s.update({"returnCode": "0"})
         return s
 
@@ -69,19 +70,27 @@ class Program:
     def handle_symptoms(self, num_symptoms, response):
         x = self.handler.handle_qa(response)
         for i in range(num_symptoms):
+            response = self.respond(user_input=x[0])
             if 'daAction' in self.handler.response_type(response):
                 break
-            response = self.respond(user_input=x[0])
             x = self.handler.handle_qa(response)
-            eprint(x)
             response = self.respond(user_input=x[0])
+            if 'daAction' in self.handler.response_type(response):
+                break
+            x = self.handler.handle_qa(response)
         return response
 
     def handle_name(self, response):
-        id = self.handler.handle_da(response)
+        name = self.handler.handle_da(response)
         x = input()
-        s = self.create_proto_struct({"user_name" : x})
-        return self.respond(requested_id=id, requested_data_struct=s)
+        s = self.create_proto_struct([{"user_name": x}])
+        return self.respond(requested_id=name, requested_data_struct=s)
+
+    def intialize_variables(self, response):
+        name = self.handler.handle_da(response)
+        variables = [{'symptom_obj': {'s1': '0', 's2': '0', 's3': '0'}}, {'user_details': {'age': '0', 'gender': '0'}}]
+        s = self.create_proto_struct(variables)
+        return self.respond(requested_id=name, requested_data_struct=s)
 
 
     def main_earlier(self):
