@@ -12,28 +12,26 @@ class DlgHandler:
     """
     look above
     """
-
-    def handle_response(self, response):
-        payload = response['payload']
-        if 'messages' in payload:
-            self.handle_message(payload['messages'])
-        if 'qaAction' in payload:
-            return self.handle_qa(payload['qaAction'])
-        elif 'daAction' in payload:
-            return self.handle_qa(payload['daAction'])
-
     def handle_message(self, m_action):
         for message in m_action:
             eprint(message['visual'][0]['text'])
 
 
-    def handle_qa(self, qa_action):
-        eprint(qa_action['message']['visual'][0]['text'])
+    def handle_qa(self, response):
+        payload = response['payload']
+        if 'messages' in payload:
+            self.handle_message(payload['messages'])
+        eprint(payload['qaAction']['message']['visual'][0]['text'])
         x = input()
-        return x
+        return [x,payload['qaAction']['message']['visual'][0]['text']]
 
-    def handle_da(self, da_action):
-        return da_action['data']
+    def handle_da(self, response):
+        payload = response['payload']
+        if 'messages' in payload:
+            self.handle_message(payload['messages'])
+        if 'data' in payload['daActon']:
+            return payload['daAction']['data']
+        return payload['daAction']['id']
 
     def response_type(self, response):
         payload = response['payload']
