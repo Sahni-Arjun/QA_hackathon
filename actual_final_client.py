@@ -20,9 +20,7 @@ def main():
         response = program.intialize_connection(channel)
         x = handler.handle_qa(response)
         response = program.respond(user_input=x[0])
-        eprint(response)
         response = program.handle_name(response)
-        eprint(response)
         response = program.intialize_variables(response)
         x = handler.handle_qa(response)
         response = program.respond(user_input=x[0])
@@ -40,8 +38,10 @@ def main():
         symptom_ids = [doctor.get_symptom_id(name) for name in symptoms]
         diagnosis = doctor.get_diagnosis(symptom_ids, gender, yob)
         eprint(f'Your most likely diagnosis is: {diagnosis[0]["Issue"]["Name"]}')
-        eprint("ISSUE INFO: ")
+        eprint(f'Here is more info about {diagnosis[0]["Issue"]["Name"]}')
         print_issue(doctor.get_issue_info(diagnosis[0]["Issue"]["ID"]))
+
+        eprint("Thank you for using Team WBNESU's medical diagnosis application! We wish you a pleasant day!")
 
 if __name__ == '__main__':
     main()

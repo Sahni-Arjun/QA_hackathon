@@ -5,13 +5,6 @@ from DlgHandler import DlgHandler
 class Program:
     session_id = None
     stub = None
-    payload_dict = {"requested_data": {
-        "id": "DataAccess_01",
-        "data": {
-            "symptom_obj": {'s1': '1', 's2': '2', 's3': '3'},
-            "returnCode": "0"
-        }
-    }}
 
     selector_dict = {
         "channel": "default",
@@ -26,8 +19,6 @@ class Program:
             "uri": self.args.modelUrn,
             "type": 0
         }
-        self.id= 'DataAccess_01'
-        self.requested_data_struct = self.create_proto_struct([{"symptom_obj": {'s1': '1', 's2': '2', 's3': '3'}}])
 
     def respond(self, user_input=None, requested_id=None, requested_data_struct=None):
         payload_dict = {
