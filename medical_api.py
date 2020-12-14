@@ -6,12 +6,12 @@ import ast
 import unicodedata
 import json
 
-
 class ApiClass:
     """
     class for api
     """
-    base_url = "https://sandbox-healthservice.priaid.ch"
+    #base_url = "https://sandbox-healthservice.priaid.ch"
+    base_url = "https://healthservice.priaid.ch"
     def __init__(self):
         self.sandbox_auth_token = open('auth.txt', 'r').readline()
 
@@ -51,4 +51,5 @@ class ApiClass:
         return ast.literal_eval(normalized_str)
 
 
-
+doctor = ApiClass()
+print(doctor.get_symptom_id('memory gap'))

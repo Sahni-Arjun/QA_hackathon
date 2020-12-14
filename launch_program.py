@@ -9,7 +9,6 @@ a = sys_out.read()
 sys_out.close()
 access_token = json.loads(a)['access_token']
 tag = "NEW_MEDIC721"
-#tag = "MEDICAL_DIAGNOSIS_721"
 
 sys_out_1 = os.popen(f'python actual_final_client.py \
 --serverUrl dlg.api.nuance.com:443 \

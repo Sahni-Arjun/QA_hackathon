@@ -1,8 +1,6 @@
 from client import *
 from google.protobuf.struct_pb2 import Struct
 from DlgHandler import DlgHandler
-from medical_api import ApiClass
-
 
 class Program:
     session_id = None
@@ -93,36 +91,5 @@ class Program:
         return self.respond(requested_id=name, requested_data_struct=s)
 
 
-    def main_earlier(self):
-        doctor = ApiClass()
-        with create_channel(self.args) as channel:
-            self.intialize_connection(channel)
-            # log.debug(f'Second request, passing in user input')
-            response = self.respond(requested_id=self.id, requested_data_struct=self.requested_data_struct)
-            for i in range(3):
-                if 'daAction' in self.handler.response_type(response):
-                    break
-                x = self.handler.handle_qa(response)
-                response = self.respond(user_input=x[0])
-                x = self.handler.handle_qa(response)
-                eprint(x)
-                response = self.respond(user_input=x[0])
-            data = self.handler.handle_da(response)['symptom_obj']
-            symptom_names = []
-            for y in data:
-                if not data[y].isdigit():
-                    symptom_names.append(data[y])
-            eprint(symptom_names)
-            symptom_ids = [doctor.get_symptom_id(name) for name in symptom_names]
-            diagnosis = doctor.get_diagnosis(symptom_ids, 'male', 2000)
-            eprint(diagnosis)
-            eprint(f'Your most likely diagnosis is: {diagnosis[0]["Issue"]["Name"]}')
-            eprint("ISSUE INFO: ")
-            eprint(doctor.get_issue_info(diagnosis[0]["Issue"]["ID"]))
-            
 
 
-
-if __name__ == '__main__':
-    program = Program()
-    program.main_earlier()

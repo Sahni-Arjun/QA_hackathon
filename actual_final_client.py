@@ -11,7 +11,6 @@ def print_issue(issue_data):
     for data in issue_data:
         eprint(f'{data}: {issue_data[data]}')
 
-
 def main():
     program = Program()
     args = parse_args()
@@ -43,16 +42,6 @@ def main():
         eprint(f'Your most likely diagnosis is: {diagnosis[0]["Issue"]["Name"]}')
         eprint("ISSUE INFO: ")
         print_issue(doctor.get_issue_info(diagnosis[0]["Issue"]["ID"]))
-
-
-
-
-
-
-
-
-
-
 
 if __name__ == '__main__':
     main()

@@ -1,13 +1,8 @@
 import argparse
-import logging
-import time
-from medical_api import ApiClass
-from DlgHandler import DlgHandler
 import sys
 
-import uuid
 
-from google.protobuf.json_format import MessageToJson, MessageToDict
+from google.protobuf.json_format import MessageToDict
 
 from grpc import StatusCode
 
@@ -105,78 +100,4 @@ def stop_request(stub, session_id=None):
     #log.debug(f'Stop Response: {response}')
     return response, call
 
-def the_main():
-    args = parse_args()
-    #log_level = logging.DEBUG
-    #logging.basicConfig(
-    #    format='%(asctime)s %(levelname)-5s: %(message)s', level=log_level)
-    with create_channel(args) as channel:
-        stub = DialogServiceStub(channel)
-        model_ref_dict = {
-            "uri": args.modelUrn,
-            "type": 0
-        }
-        selector_dict = {
-            "channel": "default",
-            "language": "en-US",
-            "library": "default"
-        }
-        response, call = start_request(stub, 
-                            model_ref_dict=model_ref_dict, 
-                            session_id=None,
-                            selector_dict=selector_dict
-                        )
-        session_id = read_session_id_from_response(response)
-        #log.debug(f'Session: {session_id}')
-        assert call.code() == StatusCode.OK
-       #log.debug(f'Initial request, no input from the user to get initial prompt')
-        payload_dict = {
-            "user_input": {
-                "userText": None
-            }
-        }
-        response, call = execute_request(stub, 
-                            session_id=session_id, 
-                            selector_dict=selector_dict,
-                            payload_dict=payload_dict
-                        )
-        handler = DlgHandler()
-        eprint(handler.response_type(response))
-        qa_node_text = response['payload']['qaAction']['message']['visual'][0]['text']
-        eprint(qa_node_text)
-        eprint(response['payload'])
-        x = input()
-        assert call.code() == StatusCode.OK
 
-        #log.debug(f'Second request, passing in user input')
-        payload_dict = {
-            "user_input": {
-                "userText": x
-            }
-        }
-        response, call = execute_request(stub, 
-                            session_id=session_id, 
-                            selector_dict=selector_dict,
-                            payload_dict=payload_dict
-                        )
-        eprint(response)
-        symptom_name = response['payload']['daAction']['data']['user_symptoms']
-        eprint(f'your symptom is: {symptom_name}')
-        doctor = ApiClass()
-        # symptom_id = doctor.get_symptom_id(symptom_name)
-        # eprint(f'symptom id: {symptom_id}')
-        # more_symptoms = doctor.get_more_symptoms([symptom_id, 10], 'male', 2000)
-        # eprint("MORE SYMPTOMS")
-        # eprint(more_symptoms)
-        # diagnosis = doctor.get_diagnosis([symptom_id, 10], 'male', 2000)
-        # eprint(diagnosis)
-        # eprint(f'Your most likely diagnosis is: {diagnosis[0]["Issue"]["Name"]}')
-        # eprint(doctor.get_issue_info(diagnosis[0]["Issue"]["ID"]))
-        # assert call.code() == StatusCode.OK
-        # response, call = stop_request(stub,
-        #                     session_id=session_id
-        #                 )
-        # assert call.code() == StatusCode.OK
-
-if __name__ == '__main__':
-    the_main()
