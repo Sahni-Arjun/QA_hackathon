@@ -38,7 +38,7 @@ def main():
         symptom_ids = [doctor.get_symptom_id(name) for name in symptoms]
         diagnosis = doctor.get_diagnosis(symptom_ids, gender, yob)
         if "invalid" in diagnosis or len(diagnosis) == 0:
-            eprint("Sorry I wasn't able to get a diagnosis for that combination of symptoms. Please visit a doctor")
+            eprint("\nSorry I wasn't able to get a diagnosis for that combination of symptoms. Please visit a doctor")
             return
         eprint(f'Your most likely diagnosis is: {diagnosis[0]["Issue"]["Name"]}')
         eprint(f'Here is more info about {diagnosis[0]["Issue"]["Name"]}')
