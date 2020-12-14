@@ -37,11 +37,14 @@ def main():
                 symptoms.append(data['symptom_obj'][x])
         symptom_ids = [doctor.get_symptom_id(name) for name in symptoms]
         diagnosis = doctor.get_diagnosis(symptom_ids, gender, yob)
+        if "invalid" in diagnosis:
+            eprint("Sorry I wasn't able to get a diagnosis for that combination of symptoms. Please visit a doctor")
+            return
         eprint(f'Your most likely diagnosis is: {diagnosis[0]["Issue"]["Name"]}')
         eprint(f'Here is more info about {diagnosis[0]["Issue"]["Name"]}')
         print_issue(doctor.get_issue_info(diagnosis[0]["Issue"]["ID"]))
 
-        eprint("Thank you for using Team WBNESU's medical diagnosis application! We wish you a pleasant day!")
+        eprint("\nThank you for using Team WBNESU's medical diagnosis application! We wish you a pleasant day!")
 
 if __name__ == '__main__':
     main()

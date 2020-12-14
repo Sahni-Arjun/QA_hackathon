@@ -50,6 +50,3 @@ class ApiClass:
         normalized_str = unicodedata.normalize('NFKD', response_str).encode('ascii', 'ignore').decode("UTF-8")
         return ast.literal_eval(normalized_str)
 
-
-doctor = ApiClass()
-print(doctor.get_symptom_id('memory gap'))
